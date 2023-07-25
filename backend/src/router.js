@@ -5,19 +5,23 @@ const router = express.Router();
 const usersController = require("./controllers/usersController");
 const usersMiddleware = require("./middlewares/usersMiddleware");
 
-const { validateName, validateSurname, validateEmail, validatePassword } =
-  usersMiddleware;
-const validate = [
-  validateName,
-  validateSurname,
-  validateEmail,
-  validatePassword,
-];
-
+router.get("/cadastro", usersController.getUsers);
 router.post(
   "/cadastro",
-  //   validate.forEach((Element) => Element()),
+  usersMiddleware.validateName,
+  usersMiddleware.validateSurname,
+  usersMiddleware.validateEmail,
+  usersMiddleware.validatePassword,
   usersController.addUser
 );
+router.put(
+  "/cadastro/:id",
+  usersMiddleware.validateName,
+  usersMiddleware.validateSurname,
+  usersMiddleware.validateEmail,
+  usersMiddleware.validatePassword,
+  usersController.updateUser
+);
+router.delete("/cadastro/:id", usersController.deleteUser);
 
 module.exports = router;

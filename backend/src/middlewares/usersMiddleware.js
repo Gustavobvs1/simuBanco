@@ -1,9 +1,8 @@
 function validateName(req, res, next) {
   const { body } = req;
-
-  if (body.name === undefined) {
+  if (body.nome === undefined) {
     return res.status(400).json({ message: "O campo nome é obrigatório" });
-  } else if (body.name === "") {
+  } else if (body.nome === "") {
     return res
       .status(404)
       .json({ message: "O campo nome não pode estar vazio" });
@@ -13,10 +12,9 @@ function validateName(req, res, next) {
 
 function validateSurname(req, res, next) {
   const { body } = req;
-
-  if (body.surname === undefined) {
+  if (body.sobrenome === undefined) {
     return res.status(400).json({ message: "O campo sobrenome é obrigatório" });
-  } else if (body.surname === "") {
+  } else if (body.sobrenome === "") {
     return res
       .status(404)
       .json({ message: "O campo nome não pode estar vazio" });
@@ -26,7 +24,6 @@ function validateSurname(req, res, next) {
 
 function validateEmail(req, res, next) {
   const { body } = req;
-
   if (body.email === undefined) {
     return res.status(400).json({ message: "O campo email é obrigatório" });
   } else if (body.email === "") {
@@ -39,10 +36,9 @@ function validateEmail(req, res, next) {
 
 function validatePassword(req, res, next) {
   const { body } = req;
-
-  if (body.password === undefined) {
+  if (body.senha === undefined) {
     return res.status(400).json({ message: "O campo senha é obrigatório" });
-  } else if (body.password === "") {
+  } else if (body.senha === "") {
     return res
       .status(404)
       .json({ message: "O campo senha não pode estar vazio" });
