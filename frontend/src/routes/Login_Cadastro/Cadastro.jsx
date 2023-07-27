@@ -80,7 +80,7 @@ function Cadastro() {
         <p>
           Já possui cadastro?
           <br />
-          <Link to="/login">Faça login aqui</Link>
+          <Link to="/">Faça login aqui</Link>
         </p>
       </div>
     </main>

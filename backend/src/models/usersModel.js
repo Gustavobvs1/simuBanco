@@ -41,9 +41,17 @@ async function deleteUser(id) {
   return deletedUser;
 }
 
+async function loginUser(user) {
+  const { email, senha } = user;
+  const verifyQuery = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
+  const [loggedUser] = await connection.execute(verifyQuery, [email, senha]);
+  return loggedUser;
+}
+
 module.exports = {
   getUsers,
   addUser,
   updateUser,
   deleteUser,
+  loginUser,
 };

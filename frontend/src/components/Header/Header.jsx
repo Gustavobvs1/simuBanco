@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Header.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
 
 function Header() {
+  const [nome, setNome] = useState("");
+  useEffect(() => {
+    const usuario = sessionStorage.getItem("usuario");
+    setNome(usuario);
+  }, []);
+
+  function handleLogout(event) {
+    event.preventDefault();
+    sessionStorage.removeItem("usuario");
+    window.location.replace("/");
+  }
   return (
     <header className="cabecalho">
-      <Link to={"/"}>
+      <Link to={"/home"}>
         <img src={Logo} alt="Logo" className="cabecalho-imagem" />
       </Link>
       <nav className="navbar">
@@ -44,8 +55,10 @@ function Header() {
         </ul>
       </nav>
       <div className="cabecalho-users">
-        <p className="users-nome">Nome</p>
-        <button className="btn-sair">Sair</button>
+        <p className="users-nome">{nome}</p>
+        <button className="btn-sair" onClick={handleLogout}>
+          Sair
+        </button>
       </div>
     </header>
   );
