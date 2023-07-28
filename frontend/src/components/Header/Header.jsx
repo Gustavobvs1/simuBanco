@@ -23,7 +23,7 @@ function Header() {
       <nav className="navbar">
         <ul>
           <li>
-            <Link to={"/"} className="navbar-item">
+            <Link to={"/home"} className="navbar-item">
               Home
             </Link>
           </li>
@@ -40,6 +40,11 @@ function Header() {
           <li>
             <Link to={"/investimentos"} className="navbar-item">
               Investimentos
+            </Link>
+          </li>
+          <li>
+            <Link to={"/emprestimos"} className="navbar-item">
+              Emprestimos
             </Link>
           </li>
           <li>
