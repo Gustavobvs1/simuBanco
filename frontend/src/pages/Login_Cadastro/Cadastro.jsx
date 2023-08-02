@@ -7,7 +7,7 @@ import axios from "axios";
 function Cadastro() {
   const [data, setData] = useState({
     nome: "",
-    sobrenome: "",
+    cpf: "",
     email: "",
     senha: "",
   });
@@ -26,7 +26,7 @@ function Cadastro() {
 
     setData({
       nome: "",
-      sobrenome: "",
+      cpf: "",
       email: "",
       senha: "",
     });
@@ -48,11 +48,11 @@ function Cadastro() {
           />
           <input
             type="text"
-            name="sobrenome"
+            name="cpf"
             className="form-input"
-            placeholder="Seu Sobrenome"
+            placeholder="Seu CPF"
             onChange={valueInput}
-            value={data.sobrenome}
+            value={data.cpf}
             required
           />
           <input

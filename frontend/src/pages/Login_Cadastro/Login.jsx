@@ -17,7 +17,7 @@ function Login() {
         senha,
       });
       if (response.status === 200) {
-        sessionStorage.setItem("usuario", response.data.nome);
+        sessionStorage.setItem("usuario", response.data.email);
         window.location.replace("/home");
       }
     } catch (err) {

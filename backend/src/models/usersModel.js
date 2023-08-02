@@ -6,14 +6,21 @@ async function getUsers() {
   return users;
 }
 
+async function getUser(user) {
+  const { email } = user;
+  const getQuery = "SELECT * FROM usuarios WHERE email = ?";
+  const [data] = await connection.execute(getQuery, [email]);
+  return data;
+}
+
 async function addUser(user) {
-  const { nome, sobrenome, email, senha } = user;
+  const { nome, cpf, email, senha } = user;
   const insertQuery =
-    "INSERT INTO usuarios (nome, sobrenome, email, senha) VALUES(?,?,?,?)";
+    "INSERT INTO usuarios (nome, cpf, email, senha) VALUES(?,?,?,?)";
 
   const [createdUser] = await connection.execute(insertQuery, [
     nome,
-    sobrenome,
+    cpf,
     email,
     senha,
   ]);
@@ -21,12 +28,12 @@ async function addUser(user) {
 }
 
 async function updateUser(id, user) {
-  const { nome, sobrenome, email, senha } = user;
+  const { nome, cpf, email, senha } = user;
   const updateQuery =
-    "UPDATE usuarios SET nome = ?, sobrenome = ?, email = ?, senha = ? WHERE id = ?";
+    "UPDATE usuarios SET nome = ?, cpf = ?, email = ?, senha = ? WHERE id = ?";
   const [updatedUser] = await connection.execute(updateQuery, [
     nome,
-    sobrenome,
+    cpf,
     email,
     senha,
     id,
@@ -50,6 +57,7 @@ async function loginUser(user) {
 
 module.exports = {
   getUsers,
+  getUser,
   addUser,
   updateUser,
   deleteUser,

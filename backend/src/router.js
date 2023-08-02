@@ -9,21 +9,23 @@ const usersMiddleware = require("./middlewares/usersMiddleware");
 router.get("/users", usersController.getUsers);
 
 //Pegar os usuarios da sessão
-router.get("/login", usersController.loginUser);
+router.post("/session", usersController.getUser);
+
 //Cadastro de usuario
 router.post(
   "/cadastro",
   usersMiddleware.validateName,
-  usersMiddleware.validateSurname,
+  usersMiddleware.validateCpf,
   usersMiddleware.validateEmail,
   usersMiddleware.validatePassword,
   usersController.addUser
 );
+
 //Atualizar dados do usuario
 router.put(
   "/users/:id",
   usersMiddleware.validateName,
-  usersMiddleware.validateSurname,
+  usersMiddleware.validateCpf,
   usersMiddleware.validateEmail,
   usersMiddleware.validatePassword,
   usersController.updateUser

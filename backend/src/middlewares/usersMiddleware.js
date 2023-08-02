@@ -10,11 +10,11 @@ function validateName(req, res, next) {
   next();
 }
 
-function validateSurname(req, res, next) {
+function validateCpf(req, res, next) {
   const { body } = req;
-  if (body.sobrenome === undefined) {
-    return res.status(400).json({ message: "O campo sobrenome é obrigatório" });
-  } else if (body.sobrenome === "") {
+  if (body.cpf === undefined) {
+    return res.status(400).json({ message: "O campo cpf é obrigatório" });
+  } else if (body.cpf === "") {
     return res
       .status(404)
       .json({ message: "O campo nome não pode estar vazio" });
@@ -50,5 +50,5 @@ module.exports = {
   validateName,
   validateEmail,
   validatePassword,
-  validateSurname,
+  validateCpf,
 };

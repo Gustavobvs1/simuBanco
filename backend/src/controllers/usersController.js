@@ -5,6 +5,11 @@ async function getUsers(req, res) {
   return res.status(200).json(users);
 }
 
+async function getUser(req, res) {
+  const [user] = await usersModel.getUser(req.body);
+  res.status(200).json(user);
+}
+
 async function addUser(req, res) {
   const createdUser = await usersModel.addUser(req.body);
   return res.status(201).json(createdUser);
@@ -38,6 +43,7 @@ async function loginUser(req, res) {
 
 module.exports = {
   getUsers,
+  getUser,
   addUser,
   updateUser,
   deleteUser,
