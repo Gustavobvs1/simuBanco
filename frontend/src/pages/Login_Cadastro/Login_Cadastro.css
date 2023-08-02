@@ -54,3 +54,20 @@
 .form-btn:hover {
   background-color: #347cc9;
 }
+
+.mensagem-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-left: 10px;
+}
+.sucesso-mensagem,
+.sucesso-imagem {
+  color: rgb(19, 213, 19);
+}
+
+.erro-imagem,
+.erro-mensagem {
+  color: rgb(182, 6, 6);
+}
