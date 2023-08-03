@@ -1,0 +1,44 @@
+.card {
+  border: 1px solid #000000;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 300px;
+  height: 35px;
+  transition: all 0.2s ease-in-out;
+}
+
+.card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-banco {
+  color: rgb(156, 10, 10);
+}
+
+.card-saldo {
+  color: rgb(11, 39, 159);
+}
+
+.expand-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icone-card {
+  color: rgb(111, 0, 255);
+  font-size: 20px;
+}
+
+.expanded {
+  height: 150px; /* Altura expandida */
+  transition: all 0.2s ease-in-out;
+}
+
+.card-details {
+  padding-top: 10px;
+}

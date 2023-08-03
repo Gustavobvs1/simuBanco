@@ -42,11 +42,6 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to={"/cartoes"} className="navbar-item">
-              Cartões
-            </Link>
-          </li>
-          <li>
             <Link to={"/investimentos"} className="navbar-item">
               Investimentos
             </Link>
@@ -59,11 +54,6 @@ function Header() {
           <li>
             <Link to={"/transfer"} className="navbar-item">
               Transferencias
-            </Link>
-          </li>
-          <li>
-            <Link to={"/historico"} className="navbar-item">
-              Histórico
             </Link>
           </li>
         </ul>
