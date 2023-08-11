@@ -23,22 +23,60 @@
   color: rgb(11, 39, 159);
 }
 
-.expand-button {
+.card-buttons {
+  gap: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.expand-button,
+.delete-button {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.icone-card {
-  color: rgb(111, 0, 255);
+.delete-card {
+  color: rgb(156, 10, 10);
+  font-size: 20px;
+}
+
+.expand-card {
+  color: rgb(77, 9, 167);
   font-size: 20px;
 }
 
 .expanded {
-  height: 150px; /* Altura expandida */
+  height: 150px;
   transition: all 0.2s ease-in-out;
 }
 
 .card-details {
   padding-top: 10px;
+}
+
+.card-create {
+  margin-top: 30px;
+  width: 100px;
+  height: 30px;
+  border: none;
+  background-color: rgb(56, 56, 56);
+  color: white;
+  cursor: pointer;
+}
+
+.card-create:hover {
+  background-color: rgb(97, 96, 96);
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.card-informations {
+  display: flex;
+  gap: 20px;
 }

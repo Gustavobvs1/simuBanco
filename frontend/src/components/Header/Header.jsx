@@ -2,19 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./Header.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
-import axios from "axios";
+const sessionsFunctions = require("../../utils/sessionFunctions.js");
 
 function Header() {
   const [nome, setNome] = useState("");
   useEffect(() => {
-    const usuario = sessionStorage.getItem("usuario");
-    async function fetchUser() {
-      const response = await axios.post("http://localhost:3002/session", {
-        email: usuario,
-      });
-      return response;
-    }
-    fetchUser().then((response) => {
+    sessionsFunctions.fetchUser().then((response) => {
       setNome(response.data.nome);
     });
   }, []);

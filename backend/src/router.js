@@ -37,4 +37,12 @@ router.delete("/users/:id", usersController.deleteUser);
 //Login de usuario
 router.post("/login", usersController.loginUser);
 
+//Tabela Contas
+
+const accountsController = require("./controllers/accountsController");
+
+router.get("/accounts", accountsController.getAccounts);
+router.post("/accounts", accountsController.addAccount);
+router.delete("/accounts/:id", accountsController.deleteAccount);
+
 module.exports = router;

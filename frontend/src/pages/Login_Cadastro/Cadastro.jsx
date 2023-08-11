@@ -31,7 +31,6 @@ function Cadastro() {
           setTimeout(() => {
             window.location.replace("/");
           }, 1000);
-        } else {
         }
       })
       .catch((err) => {
