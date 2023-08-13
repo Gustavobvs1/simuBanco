@@ -8,4 +8,4 @@ async function fetchUser() {
   return response;
 }
 
-export { fetchUser };
+export default fetchUser;

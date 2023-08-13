@@ -5,6 +5,12 @@ async function getAccounts() {
   return accounts;
 }
 
+async function getAccount(usuario_id) {
+  const getAccountQuery = "SELECT * FROM contas_bancarias WHERE usuario_id = ?";
+  const [data] = await connection.execute(getAccountQuery, [usuario_id]);
+  return data;
+}
+
 async function addAccount(account) {
   const { banco, usuario_id, tipo_conta } = account;
   const addQuery =
@@ -37,6 +43,7 @@ async function deleteAccount(id) {
 
 module.exports = {
   getAccounts,
+  getAccount,
   addAccount,
   updateAccount,
   deleteAccount,

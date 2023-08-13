@@ -6,8 +6,10 @@ import {
   AiFillDelete,
 } from "react-icons/ai";
 import "./AccountCard.css";
+import formatCurrency from "../../utils/formatCurrency";
 
-function AccountCard() {
+function AccountCard({ data }) {
+  const { saldo, banco } = data;
   const [expanded, setExpanded] = useState(false);
   const [cardCreated, setCardCreated] = useState(true);
 
@@ -18,8 +20,8 @@ function AccountCard() {
   return (
     <div className={`card ${expanded ? "expanded" : ""}`}>
       <div className="card-header">
-        <h3 className="card-banco">Banco</h3>
-        <h3 className="card-saldo">Saldo</h3>
+        <h3 className="card-banco">{banco}</h3>
+        <h3 className="card-saldo">{formatCurrency(saldo, "BRL")}</h3>
         <div className="card-buttons">
           <button className="delete-button">
             <AiFillDelete className="delete-card" />

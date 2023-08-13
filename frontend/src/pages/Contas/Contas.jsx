@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import "./Contas.css";
 import AccountCard from "../../components/AccountCard/AccountCard";
 import AccountModal from "../../components/AccountModal/AccountModal";
+import fetchUser from "../../utils/fetchUser.js";
+import axios from "axios";
 
 function Contas() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [accountData, setAccountData] = useState([]);
+  const [selectedOption, setSelectedOption] = useState();
+  const [user, setUser] = useState();
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    fetchUser().then((res) => {
+      setUser(res.data);
+    });
+  }, []);
 
   function closeModal() {
     setModalOpen(false);
@@ -15,6 +27,19 @@ function Contas() {
     setModalOpen(true);
   }
 
+  async function selectOption(element) {
+    setSelectedOption(element.target.value);
+    await axios
+      .get(`http://localhost:3002/account/${user.id}`)
+      .then((response) => {
+        setAccountData(response.data);
+      });
+    setFilteredData(
+      accountData.filter((element) => element.tipo_conta === selectedOption)
+    );
+  }
+
+  console.log(filteredData);
   return (
     <>
       <Header />
@@ -25,7 +50,11 @@ function Contas() {
         <AccountModal isOpen={modalOpen} onRequestClose={closeModal} />
         <div className="contas-container">
           <p>Selecione o tipo da conta: </p>
-          <select name="conta" className="contas-select">
+          <select
+            name="conta"
+            className="contas-select"
+            onChange={selectOption}
+          >
             <option value="" autoFocus>
               Não informado
             </option>
@@ -33,7 +62,11 @@ function Contas() {
             <option value="poupanca">Conta Poupança</option>
           </select>
         </div>
-        <AccountCard className="contas-card" />
+        <div className="contas-data-container">
+          {filteredData.map((data, index) => (
+            <AccountCard className="contas-card" key={index} data={data} />
+          ))}
+        </div>
       </main>
     </>
   );

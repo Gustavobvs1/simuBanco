@@ -5,6 +5,11 @@ async function getAccounts(req, res) {
   res.status(200).json(accounts);
 }
 
+async function getAccount(req, res) {
+  const account = await accountsModel.getAccount(req.params.usuario_id);
+  res.status(200).json(account);
+}
+
 async function addAccount(req, res) {
   const createdAccount = await accountsModel.addAccount(req.body);
   res.status(200).json(createdAccount);
@@ -24,6 +29,7 @@ async function deleteAccount(req, res) {
 
 module.exports = {
   getAccounts,
+  getAccount,
   addAccount,
   updateAccount,
   deleteAccount,

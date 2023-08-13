@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./Header.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
-const sessionsFunctions = require("../../utils/sessionFunctions.js");
+import fetchUser from "../../utils/fetchUser.js";
 
 function Header() {
   const [nome, setNome] = useState("");
   useEffect(() => {
-    sessionsFunctions.fetchUser().then((response) => {
+    fetchUser().then((response) => {
       setNome(response.data.nome);
     });
   }, []);

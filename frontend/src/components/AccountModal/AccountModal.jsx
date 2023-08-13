@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "./AccountModal.css";
 import axios from "axios";
-const sessionsFunctions = require("../../utils/sessionFunctions.js");
+import fetchUser from "../../utils/fetchUser.js";
 
 function AccountModal({ isOpen, onRequestClose }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [userId, setUserId] = useState();
   const [banco, setBanco] = useState("");
   useEffect(() => {
-    sessionsFunctions.fetchUser().then((response) => {
+    fetchUser().then((response) => {
       setUserId(response.data.id);
     });
   }, []);

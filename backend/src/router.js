@@ -42,6 +42,7 @@ router.post("/login", usersController.loginUser);
 const accountsController = require("./controllers/accountsController");
 
 router.get("/accounts", accountsController.getAccounts);
+router.get("/account/:usuario_id", accountsController.getAccount);
 router.post("/accounts", accountsController.addAccount);
 router.delete("/accounts/:id", accountsController.deleteAccount);
 
