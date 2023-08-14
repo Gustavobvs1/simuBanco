@@ -4,10 +4,11 @@ import "./AccountModal.css";
 import axios from "axios";
 import fetchUser from "../../utils/fetchUser.js";
 
-function AccountModal({ isOpen, onRequestClose }) {
+function AccountModal({ isOpen, onRequestClose, onCreate }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [userId, setUserId] = useState();
   const [banco, setBanco] = useState("");
+
   useEffect(() => {
     fetchUser().then((response) => {
       setUserId(response.data.id);
@@ -26,12 +27,13 @@ function AccountModal({ isOpen, onRequestClose }) {
     tipo_conta: selectedOption,
     banco: banco,
   };
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const url = "http://localhost:3002/accounts/";
-    axios.post(url, data);
+    await axios.post(url, data);
     setBanco("");
     onRequestClose();
+    onCreate();
   }
 
   return (

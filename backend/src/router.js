@@ -46,4 +46,13 @@ router.get("/account/:usuario_id", accountsController.getAccount);
 router.post("/accounts", accountsController.addAccount);
 router.delete("/accounts/:id", accountsController.deleteAccount);
 
+//Tabela Cartoes
+
+const cardsController = require("./controllers/cardsController");
+
+router.get("/cards", cardsController.getCards);
+router.get("/card/:conta_id", cardsController.getCard);
+router.post("/cards", cardsController.addCard);
+router.delete("/cards/:id", cardsController.deleteCard);
+
 module.exports = router;

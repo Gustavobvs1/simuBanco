@@ -19,7 +19,7 @@ async function addAccount(account) {
     usuario_id,
     tipo_conta,
     banco,
-    0,
+    0.0,
   ]);
   return { insertId: createdAccount.insertId };
 }

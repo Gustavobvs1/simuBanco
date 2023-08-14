@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   AiFillPlusCircle,
@@ -7,23 +7,55 @@ import {
 } from "react-icons/ai";
 import "./AccountCard.css";
 import formatCurrency from "../../utils/formatCurrency";
+import formatCard from "../../utils/formatCard";
+import axios from "axios";
 
-function AccountCard({ data }) {
-  const { saldo, banco } = data;
+function AccountCard({ data, onDelete }) {
+  const { saldo, banco, id, tipo_conta } = data;
   const [expanded, setExpanded] = useState(false);
-  const [cardCreated, setCardCreated] = useState(true);
+  const [cardCreated, setCardCreated] = useState(false);
+  const [cardData, setCardData] = useState({});
+  const { numero_cartao, data_validade, limite_credito } = cardData;
+
+  useEffect(() => {
+    async function fetchCard() {
+      if (tipo_conta === "corrente") {
+        await axios
+          .get(`http://localhost:3002/card/${id}`)
+          .then((res) => setCardData(res.data));
+      }
+    }
+    fetchCard();
+  }, [id, tipo_conta]);
 
   function toggleExpansion() {
     setExpanded(!expanded);
+    if (typeof cardData !== "string") {
+      setCardCreated(true);
+    }
+  }
+
+  async function handleCreateCard() {
+    const data = {
+      conta_id: id,
+    };
+    await axios.post("http://localhost:3002/cards", data);
+    setCardCreated(true);
+  }
+
+  async function deleteAccount() {
+    await axios.delete(`http://localhost:3002/cards/${id}`);
+    await axios.delete(`http://localhost:3002/accounts/${id}`);
+    onDelete(id);
   }
 
   return (
     <div className={`card ${expanded ? "expanded" : ""}`}>
       <div className="card-header">
         <h3 className="card-banco">{banco}</h3>
-        <h3 className="card-saldo">{formatCurrency(saldo, "BRL")}</h3>
+        <h3 className="card-saldo">{formatCurrency(parseInt(saldo), "BRL")}</h3>
         <div className="card-buttons">
-          <button className="delete-button">
+          <button className="delete-button" onClick={deleteAccount}>
             <AiFillDelete className="delete-card" />
           </button>
           <button className="expand-button" onClick={toggleExpansion}>
@@ -37,17 +69,28 @@ function AccountCard({ data }) {
       </div>
       {expanded && (
         <div className="card-details">
-          {cardCreated && <button className="card-create">Criar Cartão</button>}
-          {!cardCreated && (
-            <span className="card-text">
-              <p>Cartão</p>
-              <p>0003-0000-0000-0000</p>
-              <div className="card-informations">
-                <p>20/21</p>
-                <p>Limite: 2000</p>
-              </div>
-            </span>
+          {tipo_conta === "corrente" && (
+            <>
+              {!cardCreated && (
+                <button className="card-create" onClick={handleCreateCard}>
+                  Criar Cartão
+                </button>
+              )}
+              {cardCreated && (
+                <span className="card-text">
+                  <p>Cartão</p>
+                  <p>{formatCard(numero_cartao)}</p>
+                  <div className="card-informations">
+                    <p>{data_validade}</p>
+                    <p>
+                      Limite: {formatCurrency(parseInt(limite_credito), "BRL")}
+                    </p>
+                  </div>
+                </span>
+              )}
+            </>
           )}
+          {tipo_conta === "poupanca" && <div></div>}
         </div>
       )}
     </div>
