@@ -12,6 +12,7 @@ function Contas() {
   const [user, setUser] = useState();
   const [filteredData, setFilteredData] = useState([]);
   const [selectedOption, setSelectedOption] = useState();
+  const [accountExists, setAccountExists] = useState(false);
 
   useEffect(() => {
     fetchUser().then((res) => {
@@ -24,8 +25,11 @@ function Contas() {
       fetchAccount(user.id).then((response) => {
         setAccountData(response);
       });
+      if (accountData.length > 0) {
+        setAccountExists(true);
+      }
     }
-  }, [user]);
+  }, [user, accountExists, accountData]);
 
   function closeModal() {
     setModalOpen(false);
@@ -44,12 +48,15 @@ function Contas() {
   }
 
   async function handleCreateCard() {
-    await fetchAccount(user.id).then((response) => {
-      setAccountData(response);
-      setFilteredData(
-        accountData.filter((element) => element.tipo_conta === selectedOption)
-      );
-    });
+    if (user !== undefined) {
+      await fetchAccount(user.id).then((response) => {
+        const data = response;
+        setFilteredData(
+          data.filter((element) => element.tipo_conta === selectedOption)
+        );
+        setAccountData(data);
+      });
+    }
   }
 
   function handleDelete(id) {
@@ -72,28 +79,34 @@ function Contas() {
           onRequestClose={closeModal}
           onCreate={handleCreateCard}
         />
-        <div className="contas-container">
-          <p>Selecione o tipo da conta: </p>
-          <select
-            name="conta"
-            className="contas-select"
-            onChange={selectOption}
-          >
-            <option value="">Não informado</option>
-            <option value="corrente">Conta Corrente</option>
-            <option value="poupanca">Conta Poupança</option>
-          </select>
-        </div>
-        <div className="contas-data-container">
-          {filteredData.map((data, index) => (
-            <AccountCard
-              className="contas-card"
-              key={index}
-              data={data}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
+        <>
+          {accountExists && (
+            <>
+              <div className="contas-container">
+                <p>Selecione o tipo da conta: </p>
+                <select
+                  name="conta"
+                  className="contas-select"
+                  onChange={selectOption}
+                >
+                  <option value="">Não informado</option>
+                  <option value="corrente">Conta Corrente</option>
+                  <option value="poupanca">Conta Poupança</option>
+                </select>
+              </div>
+              <div className="contas-data-container">
+                {filteredData.map((data, index) => (
+                  <AccountCard
+                    className="contas-card"
+                    key={index}
+                    data={data}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </>
       </main>
     </>
   );

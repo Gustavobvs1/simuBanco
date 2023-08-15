@@ -8,6 +8,7 @@ import {
 import "./AccountCard.css";
 import formatCurrency from "../../utils/formatCurrency";
 import formatCard from "../../utils/formatCard";
+import calculateInterest from "../../utils/calculateInterest";
 import axios from "axios";
 
 function AccountCard({ data, onDelete }) {
@@ -18,15 +19,17 @@ function AccountCard({ data, onDelete }) {
   const { numero_cartao, data_validade, limite_credito } = cardData;
 
   useEffect(() => {
-    async function fetchCard() {
-      if (tipo_conta === "corrente") {
-        await axios
-          .get(`http://localhost:3002/card/${id}`)
-          .then((res) => setCardData(res.data));
+    if (cardCreated === true) {
+      async function fetchCard() {
+        if (tipo_conta === "corrente") {
+          await axios
+            .get(`http://localhost:3002/card/${id}`)
+            .then((res) => setCardData(res.data));
+        }
       }
+      fetchCard();
     }
-    fetchCard();
-  }, [id, tipo_conta]);
+  }, [id, tipo_conta, cardCreated]);
 
   function toggleExpansion() {
     setExpanded(!expanded);
@@ -40,8 +43,11 @@ function AccountCard({ data, onDelete }) {
       conta_id: id,
     };
     await axios.post("http://localhost:3002/cards", data);
-    setCardCreated(true);
+    if (typeof cardData !== "string") {
+      setCardCreated(true);
+    }
   }
+  console.log(cardCreated);
 
   async function deleteAccount() {
     await axios.delete(`http://localhost:3002/cards/${id}`);
@@ -90,7 +96,14 @@ function AccountCard({ data, onDelete }) {
               )}
             </>
           )}
-          {tipo_conta === "poupanca" && <div></div>}
+          {tipo_conta === "poupanca" && (
+            <span>
+              <p className="conta-rendimento-texto">
+                Rendimento:{" "}
+                {formatCurrency(calculateInterest(parseInt(saldo)), "BRL")}
+              </p>
+            </span>
+          )}
         </div>
       )}
     </div>

@@ -15,17 +15,17 @@ function Header() {
   function handleLogout(event) {
     event.preventDefault();
     sessionStorage.removeItem("usuario");
-    window.location.replace("/");
+    window.location.replace("/login");
   }
   return (
     <header className="cabecalho">
-      <Link to={"/home"}>
+      <Link to={"/"}>
         <img src={Logo} alt="Logo" className="cabecalho-imagem" />
       </Link>
       <nav className="navbar">
         <ul>
           <li>
-            <Link to={"/home"} className="navbar-item">
+            <Link to={"/"} className="navbar-item">
               Home
             </Link>
           </li>

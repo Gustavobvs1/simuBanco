@@ -1,7 +1,7 @@
 function formatCard(data) {
   let word = "";
   for (let i in data) {
-    if (i !== -1 && i % 4 === 0) {
+    if (i !== "0" && i % 4 === 0) {
       word += "-";
     }
     word += data[i];

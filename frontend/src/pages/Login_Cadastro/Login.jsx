@@ -22,7 +22,7 @@ function Login() {
         sessionStorage.setItem("usuario", response.data.email);
         setLoginSuccess(true);
         setLoginError(false);
-        setTimeout(() => window.location.replace("/home"), 1000);
+        setTimeout(() => window.location.replace("/"), 1000);
       }
     } catch (err) {
       console.log(err);
