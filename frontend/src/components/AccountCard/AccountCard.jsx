@@ -12,30 +12,31 @@ import calculateInterest from "../../utils/calculateInterest";
 import axios from "axios";
 
 function AccountCard({ data, onDelete }) {
-  const { saldo, banco, id, tipo_conta } = data;
   const [expanded, setExpanded] = useState(false);
   const [cardCreated, setCardCreated] = useState(false);
   const [cardData, setCardData] = useState({});
+  const [changedCard, setChangedCard] = useState(false);
+  const { saldo, banco, id, tipo_conta } = data;
   const { numero_cartao, data_validade, limite_credito } = cardData;
 
   useEffect(() => {
-    if (cardCreated === true) {
-      async function fetchCard() {
-        if (tipo_conta === "corrente") {
-          await axios
-            .get(`http://localhost:3002/card/${id}`)
-            .then((res) => setCardData(res.data));
-        }
-      }
-      fetchCard();
-    }
-  }, [id, tipo_conta, cardCreated]);
+    if (tipo_conta === "corrente") {
+      axios
+        .get(`http://localhost:3002/card/${id}`)
+        .then((res) => setCardData(res.data));
 
-  function toggleExpansion() {
-    setExpanded(!expanded);
-    if (typeof cardData !== "string") {
+      console.log("olá marilene");
+    }
+  }, [cardCreated, changedCard]);
+
+  async function toggleExpansion() {
+    const key = Object.keys(cardData);
+    if (key.length > 0) {
       setCardCreated(true);
     }
+    setExpanded(!expanded);
+    console.log(cardCreated);
+    console.log(cardData);
   }
 
   async function handleCreateCard() {
@@ -43,11 +44,14 @@ function AccountCard({ data, onDelete }) {
       conta_id: id,
     };
     await axios.post("http://localhost:3002/cards", data);
-    if (typeof cardData !== "string") {
+    setChangedCard(!changedCard);
+    const key = Object.keys(cardData);
+    if (key.length > 0) {
       setCardCreated(true);
     }
+    console.log(cardCreated);
+    console.log(cardData);
   }
-  console.log(cardCreated);
 
   async function deleteAccount() {
     await axios.delete(`http://localhost:3002/cards/${id}`);

@@ -13,23 +13,33 @@ function Contas() {
   const [filteredData, setFilteredData] = useState([]);
   const [selectedOption, setSelectedOption] = useState();
   const [accountExists, setAccountExists] = useState(false);
+  const [accounts, setAccounts] = useState([]);
 
   useEffect(() => {
-    fetchUser().then((res) => {
-      setUser(res.data);
-    });
+    async function getData() {
+      await fetchUser().then((res) => {
+        setUser(res.data);
+      });
+    }
+    getData();
   }, []);
 
   useEffect(() => {
-    if (user !== undefined) {
-      fetchAccount(user.id).then((response) => {
-        setAccountData(response);
-      });
-      if (accountData.length > 0) {
-        setAccountExists(true);
+    async function fetchData() {
+      if (user !== undefined) {
+        await fetchAccount(user.id).then(async (response) => {
+          await setAccounts(response);
+        });
       }
     }
-  }, [user, accountExists, accountData]);
+    fetchData();
+  }, [accountData, user, filteredData]);
+
+  useEffect(() => {
+    if (accounts.length > 0) {
+      setAccountExists(true);
+    }
+  }, [accounts]);
 
   function closeModal() {
     setModalOpen(false);
@@ -40,11 +50,11 @@ function Contas() {
   }
 
   async function selectOption(element) {
+    const data = accounts;
     const option = element.target.value;
     setSelectedOption(option);
-    setFilteredData(
-      accountData.filter((element) => element.tipo_conta === option)
-    );
+    setFilteredData(data.filter((element) => element.tipo_conta === option));
+    setAccountData(accounts);
   }
 
   async function handleCreateCard() {
