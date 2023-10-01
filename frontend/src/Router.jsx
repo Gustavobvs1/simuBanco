@@ -15,15 +15,15 @@ function Router() {
       <Routes>
         <Route path="/login" exact element={<Login />}></Route>
         <Route path="/cadastro" element={<Cadastro />}></Route>
-        {isAuthenticated ? (
-          <>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/contas" element={<Contas />}></Route>
-            <Route path="/investimentos" element={<Investimentos />}></Route>
-            <Route path="/emprestimos" element={<Emprestimos />}></Route>
-            <Route path="/transfer" element={<Transferencias />}></Route>
-          </>
-        ) : (
+        {/* {isAuthenticated ? ( */}
+        <>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/contas" element={<Contas />}></Route>
+          <Route path="/investimentos" element={<Investimentos />}></Route>
+          <Route path="/emprestimos" element={<Emprestimos />}></Route>
+          <Route path="/transfer" element={<Transferencias />}></Route>
+        </>
+        {/* ) : (
           <>
             <Route path="/" element={<Navigate to="/login" />}></Route>
             <Route path="/contas" element={<Navigate to="/login" />}></Route>
@@ -37,7 +37,7 @@ function Router() {
             ></Route>
             <Route path="/transfer" element={<Navigate to="/login" />}></Route>
           </>
-        )}
+        )} */}
       </Routes>
     </BrowserRouter>
   );

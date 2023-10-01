@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
 import "./Login_Cadastro.css";
@@ -13,21 +13,30 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:3002/login", {
+    await axios
+      .post("http://localhost:3002/login", {
         email,
         senha,
+      })
+      .then(async (response) => {
+        console.log(response);
+        if (response.status === 200) {
+          if (response.data.loggedIn === true) {
+            setLoginSuccess(true);
+            setLoginError(false);
+            // setTimeout(() => window.location.replace("/"), 1000);
+            await axios
+              .get("http://localhost:3002/getcookie")
+              .then((response) => console.log(response.data));
+          } else {
+            setLoginError(true);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginError(true);
       });
-      if (response.status === 200) {
-        sessionStorage.setItem("usuario", response.data.email);
-        setLoginSuccess(true);
-        setLoginError(false);
-        setTimeout(() => window.location.replace("/"), 1000);
-      }
-    } catch (err) {
-      console.log(err);
-      setLoginError(true);
-    }
   }
   return (
     <main className="form">

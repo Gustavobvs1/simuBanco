@@ -32,9 +32,10 @@ async function loginUser(req, res) {
     const loggedUser = await usersModel.loginUser(req.body);
     if (loggedUser.length == 1) {
       req.session.user = loggedUser[0];
-      res.status(200).json(loggedUser[0]);
+      res.cookie("user", loggedUser[0].id);
+      res.status(200).send({ loggedIn: true, user: req.session.user.id });
     } else {
-      res.status(401).json({ message: "Invalid username or password" });
+      res.status(401).send({ loggedIn: false });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });

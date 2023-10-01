@@ -7,9 +7,9 @@ async function getUsers() {
 }
 
 async function getUser(user) {
-  const { email } = user;
-  const getQuery = "SELECT * FROM usuarios WHERE email = ?";
-  const [data] = await connection.execute(getQuery, [email]);
+  const { id } = user;
+  const getQuery = "SELECT * FROM usuarios WHERE id = ?";
+  const [data] = await connection.execute(getQuery, [id]);
   return data;
 }
 

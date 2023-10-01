@@ -3,18 +3,24 @@ import "./Header.css";
 import Logo from "../../assets/Logo.png";
 import { Link } from "react-router-dom";
 import fetchUser from "../../utils/fetchUser.js";
+import axios from "axios";
 
 function Header() {
   const [nome, setNome] = useState("");
   useEffect(() => {
     fetchUser().then((response) => {
+      console.log(response);
       setNome(response.data.nome);
     });
   }, []);
 
-  function handleLogout(event) {
+  // useEffect(() =>
+  //   axios.get("http://localhost:3002/cookie").then((res) => console.log(res))
+  // );
+
+  async function handleLogout(event) {
     event.preventDefault();
-    sessionStorage.removeItem("usuario");
+    await axios.get("http://localhost:3002/deletecookie");
     window.location.replace("/login");
   }
   return (

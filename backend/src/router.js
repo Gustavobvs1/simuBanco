@@ -37,6 +37,14 @@ router.delete("/users/:id", usersController.deleteUser);
 //Login de usuario
 router.post("/login", usersController.loginUser);
 
+router.get("/getcookie", (req, res) => {
+  res.status(200).json(req.cookies);
+});
+
+router.get("/deletecookie", (req, res) => {
+  res.clearCookie("user").status(204).json(req.cookies);
+});
+
 //Tabela Contas
 
 const accountsController = require("./controllers/accountsController");

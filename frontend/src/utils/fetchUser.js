@@ -1,9 +1,10 @@
 import axios from "axios";
 
 async function fetchUser() {
-  const usuario = sessionStorage.getItem("usuario");
+  const userId = await axios.get("http://localhost:3002/getcookie");
+  console.log(userId.data);
   const response = await axios.post("http://localhost:3002/session", {
-    email: usuario,
+    id: userId.data,
   });
   return response;
 }
