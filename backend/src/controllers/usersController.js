@@ -32,6 +32,7 @@ async function loginUser(req, res) {
     const loggedUser = await usersModel.loginUser(req.body);
     if (loggedUser.length == 1) {
       req.session.user = loggedUser[0];
+      console.log(res.cookie());
       res.cookie("user", loggedUser[0].id);
       res.status(200).send({ loggedIn: true, user: req.session.user.id });
     } else {

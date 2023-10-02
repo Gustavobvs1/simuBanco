@@ -28,9 +28,9 @@ function Cadastro() {
       .then((res) => {
         if (res.status === 201) {
           setCadastroSuccess(true);
-          setTimeout(() => {
-            window.location.replace("/");
-          }, 1000);
+          // setTimeout(() => {
+          //   window.location.replace("/");
+          // }, 1000);
         }
       })
       .catch((err) => {

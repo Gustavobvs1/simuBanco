@@ -11,6 +11,18 @@ function Login() {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
+  async function testFunction(event) {
+    event.preventDefault();
+    await axios
+      .get("http://localhost:3002/getcookie")
+      .then((res) => console.log(res));
+  }
+
+  async function deleteCookie(event) {
+    event.preventDefault();
+    await axios.get("http://localhost:3002/deletecookie");
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     await axios
@@ -18,16 +30,13 @@ function Login() {
         email,
         senha,
       })
-      .then(async (response) => {
+      .then((response) => {
         console.log(response);
         if (response.status === 200) {
           if (response.data.loggedIn === true) {
             setLoginSuccess(true);
             setLoginError(false);
             // setTimeout(() => window.location.replace("/"), 1000);
-            await axios
-              .get("http://localhost:3002/getcookie")
-              .then((response) => console.log(response.data));
           } else {
             setLoginError(true);
           }
@@ -83,6 +92,8 @@ function Login() {
           <br />
           <Link to="/cadastro">Cadastre-se aqui</Link>
         </p>
+        <button onClick={testFunction}>Test</button>
+        <button onClick={deleteCookie}>Marilene</button>
       </div>
     </main>
   );
