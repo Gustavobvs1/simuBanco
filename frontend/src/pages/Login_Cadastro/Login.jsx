@@ -92,8 +92,8 @@ function Login() {
           <br />
           <Link to="/cadastro">Cadastre-se aqui</Link>
         </p>
-        <button onClick={testFunction}>Test</button>
-        <button onClick={deleteCookie}>Marilene</button>
+        <button onClick={testFunction}>getCookie</button>
+        <button onClick={deleteCookie}>deleteCookie</button>
       </div>
     </main>
   );
